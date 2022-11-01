@@ -7,27 +7,28 @@
 
 ### 타입스크립트 라이브러리 분석
 
-package.json의 `types`(또는 `typing`) 속성에 있는 파일이 타이핑 파일이다.
-
-- [npmjs.com](https://www.npmjs.com/)에서 패키지를 검색했을 때 패키지 우측에 `TS`로 뜨면 타입스크립트 지원 라이브러리이고, `DT`(DefinitelyTyped)로 뜨면 `@types`를 설치해야 하며, 아무것도 없으면 직접 타이핑해야 한다.
+- package.json의 `types`(또는 `typing`) 속성에 있는 파일이 타이핑 파일이다.
+- 첫 번째 줄부터 보기 보다는 마지막 줄 `exports default`나 `export =` 부분을 보고 거슬러 올라가는게 좋다.
+- 제네릭이 제일 읽기 어려워서 이 부분은 따로 필기하면서 보는게 좋다.
+- [npmjs.com](https://www.npmjs.com/)에서 패키지를 검색했을 때 패키지 우측에 `TS`로 뜨면 타입스크립트 지원 라이브러리이고, `DT`로 뜨면 `@types`(DefinitelyTyped)를 설치해야 하며, 아무것도 없으면 직접 타이핑해야 한다.
 
   - redux
     - <img width="100" src="https://user-images.githubusercontent.com/19165916/199250248-8a87b387-35ab-4180-b9e9-88e334b2022c.png">: 타이핑을 기본적으로 제공하는 라이브러리라는 것을 알 수 있다. 설치만 하면 알아서 타이핑이 다 되어있다.
   - axios
     - <img width="100" src="https://user-images.githubusercontent.com/19165916/199250460-a6445c63-a287-4a86-b4c1-0bfa84764e9c.png">: redux와 마찬가지로 기본적으로 타이핑을 제공한다.
   - 둘 모두 타이핑을 지원하지만, 차이점이 있다. <br />
-    axios는 레파지토리의 언어(Languages)를 살펴보면 JavaScript(94.1%)로 TypeScript(3.7%)로 되어있다.<br />
-    이런 경우에는 자바스크립트 라이브러리이지만 타입스크립트 사용자를 위해서 `index.d.ts`파일 하나가 있는 것이다. 그리고 여기 안에는 실제 구현은 하나도 없고, '타입 정의'들만 들어있다. axios를 사용하는 사람들을 위해서 타입들만 만들어 놓고, 사용에 문제가 없도록 해놓은거라 보면 된다.(타이핑만 `index.d.ts`에)<br />
+    `axios`는 레파지토리의 언어(Languages)를 살펴보면 JavaScript가 94.1%로 TypeScript가 3.7%로 되어있다.<br />
+    이런 경우에는 자바스크립트 라이브러리이지만 타입스크립트 사용자를 위해서 `index.d.ts`파일 하나가 있는 것이다. 그리고 여기 안에는 실제 구현은 하나도 없고, '타입 정의'들만 들어있다. `axios`를 사용하는 사람들을 위해서 타입들만 만들어 놓고, 사용에 문제가 없도록 해놓은거라 보면 된다.(타이핑만 `index.d.ts`에)<br />
 
     > ※ 짤막복습 - `declare const axios: AxiosStatic` → 구현은 다른 곳에서 하고 타입만 선언해 놓은 것. `declare`<br />
 
-    redux를 살펴보면, axios와 반대로 대부분이 타입스크립트고 자바스크립트가 오히려 더 적다.(TypeScript - 75.8%, JavaScript - 19.9%) `redux/src`로 가보면 전부 타입스크립트로 되어 있어서 이런 라이브러리는 `d.ts`도 대부분은 필요가 없다.
+    `redux`를 살펴보면, `axios`와 반대로 대부분이 타입스크립트고 자바스크립트가 오히려 더 적다.(TypeScript - 75.8%, JavaScript - 19.9%) `redux/src`로 가보면 전부 타입스크립트로 되어 있어서 이런 라이브러리는 `d.ts`도 대부분은 필요가 없다.
 
-  - `index.d.ts`가 무조건 '메인 타이핑 파일'이 아니다. 이를 알기위해서는 `package.json`의 `types(typings)`속성에 있는 파일을 살펴봐야 한다. (ex. axios - `"types": "index.d.ts"`)<br />
+  - `index.d.ts`가 늘 무조건 '메인 타이핑 파일'은 아니다. 이를 알기위해서는 `package.json`의 `types(typings)`속성에 있는 파일을 살펴봐야 한다. (ex. axios - `"types": "index.d.ts"`)<br />
     `"main"`이 프로젝트에 있는 자바스크립트 파일 중에 가장 중요한 파일이고, `"types"`가 타입에 있어서 가장 중요한 파일인 것이다.<br />
 
-    똑같이 redux도 살펴보면, `"main": "lib/redux.js"`와 `"types": "types/index.d.ts"`를 확인할 수 있다. 이 때 특이한 것 가운데 하나가 깃헙 레파지토리에는 이 `types/index.d.ts`가 보이지 않지만, 직접 설치를 해보면 보인다는 것이다. (`npm i redux` 후 `package.json` → `"typings": "./index.d.ts"`로 확인할 수 있다.)<br />
-    왜 레파지토리 코드와 설치한 라이브러리의 코드가 다를까? 타입스크립트는 결국 자바스크립트로 변환되야 한다. 그래야만 자바스크립트를 브라우저나 노드에서 실행시킬 수 있다. 그렇기 때문에 타입스크립트로 작성된 redux도 결국에는 자바스크립트로 변환되야하고, 설치한 라이브러리 역시 자바스크립트 파일이어야 한다. (`lib/redux.js`) 단, 자바스크립트 파일로 만들어져도 `index.d.ts`가 있어야 타입스크립트를 사용하는 사람들이 redux의 타입들을 확인할 수 있을 것이다.<br />
+    똑같이 redux도 살펴보면, `"main": "lib/redux.js"`와 `"types": "types/index.d.ts"`를 확인할 수 있다. 이 때 특이한 점이 깃헙 레파지토리에는 이 `types/index.d.ts`가 보이지 않지만, 직접 설치를 해보면 보인다는 것이다. (`npm i redux` 후 `package.json` → `"typings": "./index.d.ts"`로 확인할 수 있다.)<br />
+    왜 레파지토리 코드와 설치한 라이브러리의 코드가 다를까? 타입스크립트는 결국 자바스크립트로 변환되어야 한다. 그래야만 자바스크립트를 브라우저나 노드에서 실행시킬 수 있다. 그렇기 때문에 타입스크립트로 작성된 redux도 결국에는 자바스크립트로 변환되어야하고, 설치한 라이브러리 역시 자바스크립트 파일이어야 한다. (`lib/redux.js`) 단, 자바스크립트 파일로 만들어져도 `index.d.ts`가 있어야 타입스크립트를 사용하는 사람들이 redux의 타입들을 확인할 수 있을 것이다.<br />
     `ts`파일들은 최종적으로 `js`로 바뀌면서 `d.ts`를 하나 내보내준다. 그래서 결국, 결과물은 자바스크립트지만 `d.ts`를 보고 타입을 참조할 수 있게 결과물이 나오는 것이다.<br />
     (※ `"module"`은 ECMA 모듈 가운데 가장 중요한 파일을 가리킨다고 보면 된다. ex. `"module": "es/redux.js"`)
 
@@ -35,9 +36,6 @@ package.json의 `types`(또는 `typing`) 속성에 있는 파일이 타이핑 �
 
   - jquery를 살펴보면, types(typings)가 없다. 타입이 없는 라이브러리다.<br />
     - <img width="100" src="https://user-images.githubusercontent.com/19165916/199250588-bfb0484b-3e92-4ca3-b477-e1042a6d1caa.png">: npmjs.com에서 확인해보면, `TS`가 아니라 `DT`라고 되어있는걸 확인할 수 있다. 아이콘을 누르면 페이지가 이동하는데 `@types/jquery`가 나온다. 이거는 또 `TS`로 되어있다. 정리해보자면 `DT`로 들어가서 나오는 것도 함께 설치해야 타입을 지원받을 수 있다는 것이다.<br />
-      `TS`가 적혀있었던 것은 이런것이 상관없었던 것과 다르다.<br />
+      `TS`가 적혀있었던 라이브러리는 이런것이 상관없었던 것과 다르다.<br />
       `DT`는 DefinitelyTyped를 의미하는데, 특정인이 만든게 아닌 오픈소스다. 놀랍게도 `react` 역시 이 `DT`로 되어있다. 이처럼 오픈소스로 라이브러리를 만든 곳에서 직접 만든게 아니다보니 타입이 조금은 틀릴 수 있다는 단점은 있다. 반대로 오픈소스다 보니 그런 부분을 찾아 개발자가 직접 기여할 수 있다는 점도 있다. :)
-  - 가장 슬픈 일은 `TS`와 `DT` 조차 없는 라이브러리들...🥲 하지만 문제없다. 직접 만들면된다.(!)
-
-- 첫 번째 줄부터 보기 보다는 마지막 줄 `exports default`나 `export =` 부분을 보고 거슬러 올라가는게 좋다.
-- 제네릭이 제일 읽기 어려워서 이 부분은 따로 필기하면서 보는게 좋다.
+  - <img width="325" src="https://user-images.githubusercontent.com/19165916/199253731-f6cecedf-4291-4002-a79d-714bc613f09d.png">: 가장 슬픈 일은 `TS`와 `DT` 조차 없는 라이브러리들...🥲 하지만 문제없다. 직접 만들면된다.(!)
