@@ -1,0 +1,26 @@
+{
+  "name": "typescript-all-in-one-part2",
+  "version": "1.0.0",
+  "description": "> ※ Fork Repository: [https://github.com/jmnghn/ts-all-in-one](https://github.com/jmnghn/ts-all-in-one) <br /> > ※ Original Repository: [https://github.com/ZeroCho/ts-all-in-one](https://github.com/ZeroCho/ts-all-in-one) <br /><br /> > ※ Part1 Repository: [TypeScript-all-in-one-part1](https://github.com/jmnghn/TypeScript-all-in-one-part1)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmnghn/TypeScript-all-in-one-part2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmnghn/TypeScript-all-in-one-part2/issues"
+  },
+  "homepage": "https://github.com/jmnghn/TypeScript-all-in-one-part2#readme",
+  "dependencies": {
+    "jquery": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  }
+}
