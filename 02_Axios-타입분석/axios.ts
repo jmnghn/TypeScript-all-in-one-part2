@@ -35,6 +35,7 @@ type Data = {
       }
     );
 
+    // [객체를 넣어 함수로 사용하는 axios]
     // [axios({...})의 타입]
     // export interface AxiosInstance extends Axios {
     //   <T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig<D>): Promise<R>; // ✅
@@ -53,6 +54,19 @@ type Data = {
         userId: 1,
       },
     });
+
+    // [주소와 객체를 함께 넣는 함수]
+    const response4 = await axios(
+      "https://jsonplaceholder.typicode.com/posts",
+      {
+        method: "post",
+        data: {
+          title: "foo",
+          body: "bar",
+          userId: 1,
+        },
+      }
+    );
   } catch (error) {
     // 이전에도 설명했지만, 그냥 error.response.data를 쓰면 error로 어떤 타입이 들어올지 모르기 때문에 에러가 발생한다.
     // Object is of type 'unknown'.ts(2571)
