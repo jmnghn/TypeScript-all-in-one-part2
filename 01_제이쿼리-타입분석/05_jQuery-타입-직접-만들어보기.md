@@ -119,7 +119,7 @@ $(tag).html(document);
 ```
 
 ```ts
-// ArrayLike
+// ArrayLike(유사배열)
 interface ArrayLike<T> {
   readonly length: number;
   readonly [n: number]: T;
