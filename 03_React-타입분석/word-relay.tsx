@@ -1,8 +1,10 @@
 // import * as React from "react";
+import axios from "axios";
 import React, {
   useState,
   useCallback,
   useRef,
+  useEffect,
   FunctionComponent,
   ReactElement,
   FC,
@@ -16,7 +18,7 @@ type Props = {
 };
 
 const WordRelay: FC<Props> = (props) => {
-  const [word, setWord] = useState("제로초");
+  const [word, setWord] = useState("first");
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
   const inputEl = useRef(null);
