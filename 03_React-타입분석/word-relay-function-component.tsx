@@ -9,6 +9,9 @@ import React, {
   ReactElement,
   FC,
   ReactNode,
+  MouseEvent,
+  FormEvent,
+  ChangeEvent,
 } from "react";
 
 type Props = {
@@ -21,10 +24,19 @@ const WordRelay: FC<Props> = (props) => {
   const [word, setWord] = useState("first");
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
-  const inputEl = useRef(null);
+  const inputEl = useRef<HTMLInputElement>(null);
+  const mutableRef = useRef(0);
+
+  useEffect(() => {
+    mutableRef.current += 1;
+  }, []);
+
+  // const onClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  // }, []);
 
   const onSubmitForm = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const input = inputEl.current;
       if (word[word.length - 1] === value[0]) {
@@ -45,7 +57,7 @@ const WordRelay: FC<Props> = (props) => {
     [word, value]
   );
 
-  const onChange = useCallback((e) => {
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);
   }, []);
 
