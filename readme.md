@@ -10,6 +10,24 @@
 
 <br />
 
+#### ※ @types의 맨 앞자리 버전과 라이브러리 버전의 맨 앞자리는 대부분 일치해야 한다.
+
+```json
+"dependencies": {
+  "axios": "^1.1.3",
+  "jquery": "^3.6.1",
+  "react": "^18.2.0",
+  "redux": "^4.2.0",
+  "typescript": "^4.8.4"
+},
+"devDependencies": {
+  "@types/jquery": "^3.5.14",
+  "@types/react": "^18.0.24"
+}
+```
+
+<br />
+
 ### 모듈 시스템
 
 ```ts
