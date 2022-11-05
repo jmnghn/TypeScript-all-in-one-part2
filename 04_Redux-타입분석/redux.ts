@@ -34,9 +34,24 @@ const reducer = combineReducers({
     }
   },
   posts: (state, action) => {
-    return state;
+    if (Array.isArray(state)) {
+      switch (action.type) {
+        case "ADD_POST":
+          return [...state, action.data];
+        default:
+          return state;
+      }
+    }
   },
 });
 
 const store = createStore(reducer, initialState);
 store.dispatch(LOGIN_ACTION);
+store.dispatch({
+  type: "ADD_POST",
+  data: {
+    id: 1,
+    title: "title",
+    content: "content",
+  },
+});

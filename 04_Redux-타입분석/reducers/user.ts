@@ -1,0 +1,44 @@
+import { LogInRequestAction } from "./../actions/user";
+import { Reducer } from "redux";
+import {
+  LogInSuccessAction,
+  LogInSuccessData,
+  LogoutAction,
+} from "../actions/user";
+
+interface InitialState {
+  isLoggingIn: boolean;
+  data: LogInSuccessData | null;
+}
+
+const initialState = {
+  isLoggingIn: false,
+  data: null,
+};
+
+type UserReducerActions =
+  | LogInSuccessAction
+  | LogoutAction
+  | LogInRequestAction;
+const userReducer: Reducer<InitialState, UserReducerActions> = (
+  prevState = initialState,
+  action
+) => {
+  // 새로운 state 만들어주기
+  switch (action.type) {
+    case "LOG_IN_SUCCESS":
+      return {
+        ...prevState,
+        data: action.data,
+      };
+    case "LOG_OUT":
+      return {
+        ...prevState,
+        data: null,
+      };
+    default:
+      return prevState;
+  }
+};
+
+export default userReducer;
