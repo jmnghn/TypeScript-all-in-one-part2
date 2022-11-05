@@ -8,11 +8,13 @@ import {
 
 interface InitialState {
   isLoggingIn: boolean;
+  loading: boolean;
   data: LogInSuccessData | null;
 }
 
 const initialState = {
   isLoggingIn: false,
+  loading: false,
   data: null,
 };
 
@@ -29,6 +31,7 @@ const userReducer: Reducer<InitialState, UserReducerActions> = (
     case "LOG_IN_SUCCESS":
       return {
         ...prevState,
+        loading: false,
         data: action.data,
       };
     case "LOG_OUT":

@@ -13,6 +13,7 @@ import { ThunkMiddleware } from "redux-thunk";
 const initialState = {
   user: {
     isLoggingIn: true,
+    loading: false,
     data: null,
   },
   posts: [],
@@ -37,6 +38,8 @@ const enhancer = applyMiddleware(
 );
 
 const store = createStore(reducer, initialState, enhancer);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 console.log("1st", store.getState());
 
@@ -65,3 +68,5 @@ console.log("2nd", store.getState());
 //
 // store.dispatch(logOut());
 // console.log('5th', store.getState());
+
+export { store };
