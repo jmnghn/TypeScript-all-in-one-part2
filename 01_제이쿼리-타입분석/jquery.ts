@@ -59,3 +59,5 @@ const tag = $("ul li")
   });
 
 $(tag).html(document);
+
+window.setTimeout(() => {}, 1000);
